@@ -1,21 +1,49 @@
 import express from 'express';
 import Database from '../services/Database';
 
-const app = express();
-const PORT = 3333;
+class App {
+    private app: express.Application;
+    private dataBase: Database;
+    private port: number;
+    private mongoUrl: string;
 
-app.use(express.json());
+    constructor() {
+        this.app = express();
+        this.dataBase = new Database();
+        this.port = 3333;
+        this.mongoUrl = 'mongodb://localhost:27017/store';
 
-const dataBase = new Database();
-const mongoUrl = ('mongodb://localhost:27017/store');
-dataBase.connectMongoDb(mongoUrl);
+        this.config();
+        this.appRoutes();
+    }
 
-app.get('/server', (req, res) => {
-    res.send("Servidor rodando!")
-});
+    private config(): void {
+        this.app.use(express.json());
+    }
 
-app.listen(PORT, () => {
-    console.log(`Servidor rodando em http://localhost:${PORT}`);
-});
+    private appRoutes() : void {
+        this.app.get('/server', (req, res) => {
+            res.send("Servidor rodando!")
+        });
+    }
 
+    private async connectMongoDb() : Promise<void> {
+        await this.dataBase.connectMongoDb(this.mongoUrl);
+    }
 
+    public async run() : Promise<void> {
+        try{
+            await this.connectMongoDb();
+            this.app.listen(this.port, () => {
+                console.log(`Server online in http://localhost:${this.port}/server`);
+            });
+        }   catch (err) {
+                console.error(`Error in ${err}`);
+            }
+
+    }
+
+}
+
+const app = new App();
+app.run();
