@@ -5,4 +5,4 @@ const productSchema = new mongoose.Schema({
 	price: { type: Number, require: true },
 });
 
-export const Product = mongoose.model('Product', productSchema);
+export const Product = mongoose.model('product', productSchema);
