@@ -25,6 +25,17 @@ class App {
 		this.app.get('/server', (req, res) => {
 			res.send('Servidor rodando!');
 		});
+
+		this.app.post('/insert', async (req, res) => {
+			try {
+				console.log(req.body);
+				await this.dataBase.insertProduct(req.body);
+				res.status(201).json({ message: 'Product successfully registered!' });
+			} catch (error) {
+				console.error(error);
+				res.status(500).json({ message: 'Error registering product' });
+			}
+		});
 	}
 
 	private async connectMongoDb(): Promise<void> {

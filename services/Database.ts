@@ -16,7 +16,7 @@ class Database {
 		try {
 			const item = new Product(data);
 			await item.save();
-			console.log(`Product registred sucessful!`);
+			console.log(`Product successfully registered!`);
 		} catch (err) {
 			console.error(`Error in ${err}`);
 			throw err;
