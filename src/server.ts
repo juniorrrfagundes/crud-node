@@ -1,5 +1,6 @@
 import express from 'express';
-import Database from '../services/Database';
+import Database from './services/Database';
+import productRoutes from './routes/ProductRoutes';
 
 class App {
 	private app: express.Application;
@@ -26,19 +27,11 @@ class App {
 			res.send('Servidor rodando!');
 		});
 
-		this.app.post('/insert', async (req, res) => {
-			try {
-				console.log(req.body);
-				await this.dataBase.insertProduct(req.body);
-				res.status(201).json({ message: 'Product successfully registered!' });
-			} catch (error) {
-				console.error(error);
-				res.status(500).json({ message: 'Error registering product' });
-			}
-		});
+		this.app.use('/products', productRoutes);
 	}
 
 	private async connectMongoDb(): Promise<void> {
+		console.log('Tryning to connect in MongoDB');
 		await this.dataBase.connectMongoDb(this.mongoUrl);
 	}
 
@@ -53,6 +46,6 @@ class App {
 		}
 	}
 }
-[];
+
 const app = new App();
 app.run();
