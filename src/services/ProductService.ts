@@ -1,4 +1,5 @@
 import ProductRepository from '../repositoires/ProductRepository';
+import { InsertProductResponse } from '../interface/InsertProductResponse';
 
 class ProductService {
 	private productRepository: ProductRepository;
@@ -7,8 +8,11 @@ class ProductService {
 		this.productRepository = new ProductRepository();
 	}
 
-	public async insertProduct(data: { name: string; price: number }): Promise<void> {
-		this.productRepository.insertProduct(data);
+	public async insertProduct(data: {
+		name: string;
+		price: number;
+	}): Promise<InsertProductResponse> {
+		return await this.productRepository.insertProduct(data);
 	}
 }
 

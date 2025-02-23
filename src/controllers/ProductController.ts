@@ -10,12 +10,18 @@ class ProductController {
 
 	public async insertProduct(req: Request, res: Response): Promise<void> {
 		try {
-			console.log(req.body);
-			await this.productService.insertProduct(req.body);
-			res.status(201).json({ message: 'Product successfully registered!' });
+			const result = await this.productService.insertProduct(req.body);
+			if (result.success) {
+				res.status(201).json({
+					message: 'Product successfully registered!',
+					product: result,
+				});
+			} else {
+				res.status(500).json({ message: 'Error registering product!', product: result });
+			}
 		} catch (error) {
 			console.error(error);
-			res.status(500).json({ message: 'Error registering product' });
+			res.status(500).json({ message: 'Unexpected error', error });
 		}
 	}
 }
