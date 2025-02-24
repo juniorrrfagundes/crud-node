@@ -24,6 +24,23 @@ class ProductController {
 			res.status(500).json({ message: 'Unexpected error', error });
 		}
 	}
+
+	public async searchProduct(req: Request, res: Response): Promise<void> {
+		try {
+			const result = await this.productService.searchProduct();
+			if (result.success) {
+				res.status(201).json({
+					message: 'Products successfully searched!',
+					product: result,
+				});
+			} else {
+				res.status(500).json({ message: 'Error searching products', product: result });
+			}
+		} catch (error) {
+			console.error(error);
+			res.status(500).json({ message: 'Unexpected error', error });
+		}
+	}
 }
 
 export default ProductController;

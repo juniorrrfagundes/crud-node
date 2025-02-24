@@ -13,7 +13,9 @@ class ProductRoutes {
 
 	private InitializeRoutes(): void {
 		this.router.post('/insert', (req, res) => this.productController.insertProduct(req, res));
+		this.router.get('/', (req, res) => {this.productController.searchProduct(req, res)});
 	}
+	
 
 	public getRoutes(): Router {
 		return this.router;
