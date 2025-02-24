@@ -24,6 +24,17 @@ class ProductRepository {
 			return { success: false, error: 'Unknown error occurred' };
 		}
 	}
+
+	public async searchById(id: string): Promise<ProductResponse> {
+		try {
+			const result = await Product.findById(id);
+			console.log('Search by id successfully!');
+			return { success: true, data: result };
+		} catch (error) {
+			console.log(`Error in search by id, ${error}`);
+			return { success: false, error: error };
+		}
+	}
 }
 
 export default ProductRepository;
