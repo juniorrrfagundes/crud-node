@@ -11,14 +11,10 @@ class ProductController {
 	public async insertProduct(req: Request, res: Response): Promise<void> {
 		try {
 			const result = await this.productService.insertProduct(req.body);
-			if (result.success) {
-				res.status(201).json({
-					message: 'Product successfully registered!',
-					product: result,
-				});
-			} else {
-				res.status(500).json({ message: 'Error registering product!', product: result });
-			}
+			res.status(201).json({
+				message: 'Product successfully registered!',
+				product: result,
+			});
 		} catch (error) {
 			console.error(error);
 			res.status(500).json({ message: 'Unexpected error', error });
@@ -28,14 +24,7 @@ class ProductController {
 	public async searchProduct(req: Request, res: Response): Promise<void> {
 		try {
 			const result = await this.productService.searchProduct();
-			if (result.success) {
-				res.status(201).json({
-					message: 'Products successfully searched!',
-					product: result,
-				});
-			} else {
-				res.status(500).json({ message: 'Error searching products', product: result });
-			}
+			res.status(200).json({ product: result });
 		} catch (error) {
 			console.error(error);
 			res.status(500).json({ message: 'Unexpected error', error });
@@ -45,14 +34,7 @@ class ProductController {
 	public async searchById(req: Request, res: Response): Promise<void> {
 		try {
 			const result = await this.productService.searchById(req.params.id);
-			if (result.success) {
-				res.status(201).json({
-					message: `Product ${req.body} successfully searched!`,
-					product: result,
-				});
-			} else {
-				res.status(500).json({ message: `Error searching ${req.body}`, product: result });
-			}
+			res.status(200).json({ product: result });
 		} catch (error) {
 			console.error(error);
 			res.status(500).json({ message: 'Unexpected error', error });
