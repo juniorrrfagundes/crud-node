@@ -1,5 +1,5 @@
 import ProductRepository from '../repositoires/ProductRepository';
-import { ProductResponse } from '../interface/ProductResponse';
+import { IProduct } from '../models/Product';
 
 class ProductService {
 	private productRepository: ProductRepository;
@@ -8,18 +8,17 @@ class ProductService {
 		this.productRepository = new ProductRepository();
 	}
 
-	public async insertProduct(data: { name: string; price: number }): Promise<ProductResponse> {
-		return await this.productRepository.insertProduct(data);
+	public insertProduct(data: { name: string; price: number }): Promise<IProduct> {
+		return this.productRepository.insertProduct(data);
 	}
 
-	public async searchProduct(): Promise<ProductResponse> {
-		return await this.productRepository.searchProduct();
+	public searchProduct(): Promise<IProduct[]> {
+		return this.productRepository.searchProduct();
 	}
 
-	public async searchById(id: string): Promise<ProductResponse>{
-		return await this.productRepository.searchById(id);
+	public searchById(id: string): Promise<IProduct | null> {
+		return this.productRepository.searchById(id);
 	}
-
 }
 
 export default ProductService;

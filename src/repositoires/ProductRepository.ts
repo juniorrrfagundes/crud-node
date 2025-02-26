@@ -1,38 +1,37 @@
-import { Product } from '../models/Product';
-import { ProductResponse } from '../interface/ProductResponse';
+import { Product, IProduct } from '../models/Product';
 
 class ProductRepository {
-	public async insertProduct(data: { name: string; price: number }): Promise<ProductResponse> {
+	public async insertProduct(data: { name: string; price: number }): Promise<IProduct> {
 		try {
 			const item = new Product(data);
 			await item.save();
 			console.log(`Product successfully registered!`);
-			return { success: true, data: item };
-		} catch (err) {
-			console.error(`Error in ${err}`);
-			return { success: false, error: 'Unknown error occurred' };
+			return item;
+		} catch (error) {
+			console.error(`Error in ${error}`);
+			throw error;
 		}
 	}
 
-	public async searchProduct(): Promise<ProductResponse> {
+	public async searchProduct(): Promise<IProduct[]> {
 		try {
 			const result = await Product.find();
 			console.log('Products successfully searched!');
-			return { success: true, data: result };
+			return result;
 		} catch (error) {
 			console.error(`Error searching products: ${error}`);
-			return { success: false, error: 'Unknown error occurred' };
+			throw error;
 		}
 	}
 
-	public async searchById(id: string): Promise<ProductResponse> {
+	public async searchById(id: string): Promise<IProduct | null> {
 		try {
 			const result = await Product.findById(id);
 			console.log('Search by id successfully!');
-			return { success: true, data: result };
+			return result;
 		} catch (error) {
 			console.log(`Error in search by id, ${error}`);
-			return { success: false, error: error };
+			throw error;
 		}
 	}
 }
