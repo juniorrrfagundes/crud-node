@@ -41,12 +41,24 @@ class ProductController {
 		}
 	}
 
-	public async delete(req: Request, res: Response): Promise<void> {
+	public async deleteProduct(req: Request, res: Response): Promise<void> {
 		try {
-			const result = await this.productService.delete(req.params.id);
+			const result = await this.productService.deleteProduct(req.params.id);
 			result
 				? res.status(200).json({ product: result })
-				: res.status(404).json({ message: 'Produto não encontrado' });
+				: res.status(204).json({ message: 'Produto não encontrado' });
+		} catch (error) {
+			console.error(error);
+			res.status(500).json({ message: 'Unexpected error' });
+		}
+	}
+
+	public async updateProduct(req: Request, res: Response): Promise<void> {
+		try {
+			const result = await this.productService.updateProduct(req.params.id, req.body);
+			result
+				? res.status(200).json({ product: result })
+				: res.status(204).json({ message: 'Produto não encontrado' });
 		} catch (error) {
 			console.error(error);
 			res.status(500).json({ message: 'Unexpected error' });

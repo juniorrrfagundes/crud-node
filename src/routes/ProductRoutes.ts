@@ -15,7 +15,8 @@ class ProductRoutes {
 		this.router.post('/insert', (req, res) => this.productController.insertProduct(req, res));
 		this.router.get('/', (req, res) => this.productController.searchProduct(req, res));
 		this.router.get('/:id', (req, res) => this.productController.searchById(req, res));
-		this.router.delete('/:id', (req, res) => this.productController.delete(req, res));
+		this.router.delete('/:id', (req, res) => this.productController.deleteProduct(req, res));
+		this.router.put('/:id', (req, res) => this.productController.updateProduct(req, res));
 	}
 
 	public getRoutes(): Router {

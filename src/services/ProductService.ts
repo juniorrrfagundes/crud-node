@@ -20,8 +20,12 @@ class ProductService {
 		return this.productRepository.searchById(id);
 	}
 
-	public delete(id: string): Promise<IProduct | null> {
-		return this.productRepository.delete(id);
+	public deleteProduct(id: string): Promise<IProduct | null> {
+		return this.productRepository.deleteProduct(id);
+	}
+
+	public updateProduct(id: string, data: Record<string, any>): Promise<IProduct | null> {
+		return this.productRepository.updateProduct(id, data);
 	}
 }
 
