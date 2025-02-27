@@ -34,6 +34,17 @@ class ProductRepository {
 			throw error;
 		}
 	}
+
+	public async delete(id: string): Promise<IProduct | null> {
+		try {
+			const result = await Product.findOneAndDelete({ _id: id });
+			console.log('Delete successfully!');
+			return result;
+		} catch (error) {
+			console.log(`Error in delete, ${error}`);
+			throw error;
+		}
+	}
 }
 
 export default ProductRepository;
