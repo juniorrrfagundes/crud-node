@@ -19,6 +19,14 @@ class ProductService {
 	public searchById(id: string): Promise<IProduct | null> {
 		return this.productRepository.searchById(id);
 	}
+
+	public deleteProduct(id: string): Promise<IProduct | null> {
+		return this.productRepository.deleteProduct(id);
+	}
+
+	public updateProduct(id: string, data: Record<string, any>): Promise<IProduct | null> {
+		return this.productRepository.updateProduct(id, data);
+	}
 }
 
 export default ProductService;

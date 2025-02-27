@@ -34,6 +34,29 @@ class ProductRepository {
 			throw error;
 		}
 	}
+
+	public async deleteProduct(id: string): Promise<IProduct | null> {
+		try {
+			const result = await Product.findOneAndDelete({ _id: id });
+			console.log('Delete successfully!');
+			return result;
+		} catch (error) {
+			console.log(`Error in delete, ${error}`);
+			throw error;
+		}
+	}
+
+	public async updateProduct(id: string, data: Record<string, any>): Promise<IProduct | null> {
+		try {
+			const result = await Product.findByIdAndUpdate(id, { $set: data }, { new: true });
+			console.log('Product updated successfully!');
+			console.log(result);
+			return result;
+		} catch (error) {
+			console.log(`Error in delete, ${error}`);
+			throw error;
+		}
+	}
 }
 
 export default ProductRepository;
